@@ -1,14 +1,6 @@
 const createZerosTriangle = require("./createZerosTriangle");
 
 const maximumSum = (triangle) => {
-  if (
-    triangle === undefined ||
-    triangle.length === 0 ||
-    triangle[0].length === 0 ||
-    isPrime(triangle[0][0])
-  ) {
-    return 0;
-  }
   let sums = createZerosTriangle(triangle);
   for (let k = triangle.length - 1; k >= 0; --k) {
     let currentLine = triangle[k];
@@ -19,19 +11,11 @@ const maximumSum = (triangle) => {
       } else if (k === triangle.length - 1) {
         sums[k][i] = currentLine[i];
       } else {
-        if (i !== 0) {
-          sums[k][i] = Math.max(
-            sums[k][i],
-            currentValue + sums[k + 1][i - 1]
-          );
-        }
-        sums[k][i] = Math.max(
-          sums[k][i],
-          currentValue + Math.max(sums[k + 1][i], sums[k + 1][i + 1])
-        );
+        sums[k][i] = Math.max(currentValue + sums[k + 1][i + 1], currentValue + sums[k + 1][i])
       }
     }
   }
+  sums.forEach(z=>console.log(z.join('\t')))
   return sums[0][0];
 };
 
@@ -41,7 +25,7 @@ const isPrime = (num) => {
       return false
     }
   }
-  return num !== 1;
+  return true;
 };
 
 
